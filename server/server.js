@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
 const fs = require('fs')
-const Docker = require('dockerode')
+const axios = require('axios')
 const PORT = process.env.PORT || 3000;
+const remoteExeURL = process.env.REMOTE_EXE_SERVICE_URL
 
-const docker = new Docker()
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -14,29 +14,20 @@ app.get("/", (req, res) => {
 });
 
 app.post("/execute", async (req, res) => {
-    const id = req.params.id;
-    const code = req.body.code;
+    try {
+        const id = req.params.id;
+        const code = req.body.code;
 
-    await runCodeInContainer(code);
-    res.send("Successfully run the code.")
+        const res = await axios.post(`${remoteExeURL}/execute`, {
+            userCode: code
+        });
+
+        console.log(res);
+        res.json({res});
+    } catch (err) {
+        console.log("Error in executing code", err);
+    }
 });
-
-// Helper function.
-const runCodeInContainer = async (userCode) => {
-    const container = await docker.createContainer({
-        Image: "python:3.11-slim",
-        Cmd: ["python3", "-c", userCode]
-    });
-
-    await container.start();
-    const output = await container.wait();
-    const logs = await container.logs({ stdout: true, stderr: true });
-    console.log(output)
-
-    console.log(logs.toString());
-
-    await container.remove();
-};
 
 app.listen(PORT, () => {
     console.log("Server is Listening at PORT: ", PORT);
