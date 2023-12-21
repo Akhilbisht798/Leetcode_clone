@@ -1,0 +1,9 @@
+# https://kubernetes.io/docs/concepts/configuration/configmap/
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: server-configmap
+  namespace: default
+data:
+  REMOTE_EXE_SERVICE_URL: "http://remote-exe-service:8000"
+---

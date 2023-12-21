@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-server-service
+spec:
+  ports:
+    - protocol: TCP
+      port: 80  # Externally exposed port
+      targetPort: 3000  # Port on which the Node.js server is listening inside the container
+  selector:
+    app: my-server
+
