@@ -2,8 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: server-configmap
+  name: leetcode-config
   namespace: default
 data:
-  REMOTE_EXE_SERVICE_URL: "http://remote-exe-service:8000"
----
+  rce_url: rce-service 

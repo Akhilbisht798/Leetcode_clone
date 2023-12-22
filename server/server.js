@@ -3,7 +3,7 @@ const app = express();
 const fs = require('fs')
 const axios = require('axios')
 const PORT = process.env.PORT || 3000;
-const remoteExeURL = process.env.REMOTE_EXE_SERVICE_URL
+const rceUrl = process.env.RCE_URL;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -18,7 +18,7 @@ app.post("/execute", async (req, res) => {
         const id = req.params.id;
         const code = req.body.code;
 
-        const res = await axios.post(`${remoteExeURL}/execute`, {
+        const res = await axios.post(`${RCE_URL}/execute`, {
             userCode: code
         });
 
