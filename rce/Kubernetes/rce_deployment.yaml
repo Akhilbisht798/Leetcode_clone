@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rce-deployment
+  labels:
+    app: rce
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rce
+  template:
+    metadata:
+      labels:
+        app: rce
+    spec:
+      containers:
+      - name: rce
+        image: akhilbisht798/rce_leetcode:1.0
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rce-service
+spec:
+  selector:
+    app: rce
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
