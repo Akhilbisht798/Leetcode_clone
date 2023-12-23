@@ -2,8 +2,9 @@ const express = require('express');
 const app = express();
 const fs = require('fs')
 const axios = require('axios')
+const CircularJson = require('circular-json')
 const PORT = process.env.PORT || 3000;
-const rceUrl = process.env.RCE_URL;
+const rceUrl = process.env.RCE_URL || "http://localhost:5000";
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -15,17 +16,17 @@ app.get("/", (req, res) => {
 
 app.post("/execute", async (req, res) => {
     try {
-        const id = req.params.id;
         const code = req.body.code;
 
-        const res = await axios.post(`${RCE_URL}/execute`, {
+        const data = await axios.post(`${rceUrl}/execute`, {
             userCode: code
         });
-
-        console.log(res);
-        res.json({res});
+        result = data.data;
+        console.log(result);
+        res.status(200).json({result: CircularJson.stringify(result)});
     } catch (err) {
         console.log("Error in executing code", err);
+        return res.status(500).json({ error: err })
     }
 });
 
