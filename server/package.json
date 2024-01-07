@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "amqplib": "^0.10.3",
     "axios": "^1.6.2",
     "circular-json": "^0.5.9",
     "dockerode": "^4.0.0",

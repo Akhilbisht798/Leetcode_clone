@@ -20,11 +20,11 @@ spec:
         ports:
         - containerPort: 3000
         env:
-        - name: RCE_URL
+        - name: QUEUE_URL
           valueFrom:
             configMapKeyRef:
               name: leetcode-config
-              key: rce_url
+              key: queue_url
 ---
 apiVersion: v1
 kind: Service

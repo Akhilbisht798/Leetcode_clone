@@ -6,3 +6,4 @@ metadata:
   namespace: default
 data:
   rce_url: rce-service 
+  queue_url: rabbitmq-service
